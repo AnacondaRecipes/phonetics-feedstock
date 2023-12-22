@@ -1,0 +1,46 @@
+{% set name = "phonetics" %}
+{% set version = "1.0.5" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 16263948c82fce1e257964b2ab4adc953f995e0fa7e2e60e6ba336d77a7235ba
+
+build:
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  number: 0
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python
+
+test:
+  source_files:
+    - phonetics/tests
+  imports:
+    - phonetics
+  commands:
+    - pip check
+    - python -m unittest discover phonetics/tests/ -v
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ZackDibe/phonetics
+  summary: Compute phonetic key of strings for indexing or fuzzy matching
+  description: Compute phonetic key of strings for indexing or fuzzy matching
+  license: MIT
+  # missing license file in upstream repo
+  license_family: MIT
+  doc_url: https://github.com/ZackDibe/phonetics
+  dev_url: https://github.com/ZackDibe/phonetics
+
+extra:
+  recipe-maintainers:
+    - boldorider4
